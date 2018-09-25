@@ -1,5 +1,4 @@
-# bus-mall
-##User story
+#User story
 This is busmall marketing study user story
 #### Here is a list of user story
 *When i click it 
