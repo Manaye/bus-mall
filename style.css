@@ -1,0 +1,48 @@
+hr{
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+h1{
+
+    position: relative;
+    left: 40%;
+}
+#my-image1, #my-image2, #my-image3{
+
+    border: 1px solid brown;
+    margin: 15px 30px;
+    padding: 20px;
+    width: 15%;
+    background-color: burlywood;
+}
+#bar-chart{
+ 
+    width: 100%;
+    height: 100%;
+    
+}
+#pie-chart{
+    width: 100%;
+    height: 100%;
+    
+}
+.bar-chart-container, .pie-chart-container{
+    display: inline-block;
+    width: 40%;
+    height: 40%;
+}
+.bar-chart-container{
+    margin-bottom: 40px;
+    margin-right: 80px;
+}
+
+.bar-chart-container h3{
+    position: relative;
+    left: 20%;
+    display: none;
+}
+.pie-chart-container h3{
+    position: relative;
+    right: -10%;
+    display: none;
+}
