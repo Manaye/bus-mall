@@ -12,6 +12,8 @@ function Images(filepath, filename, numberOfTimesShown=0, votes=0){
 }
 Images.allImages = [];
 
+
+
 function initializeDatabase() {
   new Images('assets/bag.jpg', 'bag');
   new Images('assets/banana.jpg', 'banana');
@@ -33,6 +35,7 @@ function initializeDatabase() {
   new Images('assets/usb.gif', 'usb');
   new Images('assets/water-can.jpg', 'water-can');
   new Images('assets/wine-glass.jpg', 'wine-glass');
+  
 }
 
 function setupEventListeners() {
@@ -47,24 +50,20 @@ function removeEventListeners() {
   imgElement3.removeEventListener('click', eventHandler);
 }
 
-
-
 function eventHandler(event){
+  
   var imageName = event.target.alt;
   for( var i=0; i<Images.allImages.length; i++) {
     if(Images.allImages[i].filename === imageName ) {
-      Images.allImages[i].votes++;
-      maxClicksAllowed--;
+      Images.allImages[i].votes++;     
+      maxClicksAllowed--;         
       break;
     }
   }
 
   if(maxClicksAllowed === 0) {
     removeEventListeners();
-    showBarChart();
-    showPieChart();
-    // showChart();
-    // summarizeData();
+    summarizeData();
     return;
   }
 
@@ -86,6 +85,7 @@ function eventHandler(event){
   Images.allImages[randomNum2].numberOfTimesShown++;
   Images.allImages[randomNum3].numberOfTimesShown++;
 
+
 }
 
 document.body.onload = function(){
@@ -103,95 +103,23 @@ document.body.onload = function(){
   imgElement3.alt = Images.allImages[randomNum6].filename;
 };
 
-function showBarChart() {
-  document.getElementById('bar-chart-title').style.display = 'block';
-  var labels = [];
-  var voteData = [];
-  var views = [];
-  var colors = [];
-
-  for (var i = 0; i < Images.allImages.length; i++) {
-    labels.push(Images.allImages[i].filename);
-    views.push(Images.allImages[i].numberOfTimesShown);
-    voteData.push(Images.allImages[i].votes);
-      
-    var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    colors.push(randomColor);
+function summarizeData() {
+  localStorage.removeItem('my-votes');
+  var votes = [];
+  var detail = document.getElementById('detail');
+  var ul = document.createElement('ul');
+  for(var i=0; i<Images.allImages.length; i++) {
+    var li = document.createElement('li');
+    li.textContent = `
+        ${Images.allImages[i].filename}
+        Views: ${Images.allImages[i].numberOfTimesShown}
+        votes: ${Images.allImages[i].votes}
+     `;
+    votes.push({filename: Images.allImages[i].filename, votes: Images.allImages[i].votes});
+    localStorage.setItem('my-votes', JSON.stringify(votes));
+    ul.appendChild(li);
   }
-  
-  var context = document.getElementById('bar-chart').getContext('2d');
-  var myChart = new Chart(context, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Popularity (% of clicks)',
-          data: voteData,
-          backgroundColor: colors,
-        },
-      ],
-    },
-    options: {
-      responsive: false,
-      maintainAspectRatio: true,
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
-      },
-    },
-  });
-}
-
-function showPieChart() {
-  document.getElementById('pie-chart-title').style.display = 'block';
-
-  var labels = [];
-  var voteData = [];
-  var views = [];
-  var colors = [];
-  
-  for (var i = 0; i < Images.allImages.length; i++) {
-    labels.push(Images.allImages[i].filename);
-    views.push(Images.allImages[i].numberOfTimesShown);
-    voteData.push(Images.allImages[i].votes);
-
-    var randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    colors.push(randomColor);
-  }
-  
-  var context = document.getElementById('pie-chart').getContext('2d');
-  var myChart = new Chart(context, {
-    type: 'pie',
-    data: {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Popularity (% of clicks)',
-          data: voteData,
-          backgroundColor: colors,
-        },
-      ],
-    },
-    options: {
-      responsive: false,
-      maintainAspectRatio: true,
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-            },
-          },
-        ],
-      },
-    },
-  });
+  detail.appendChild(ul);
 }
 
 setupEventListeners();
