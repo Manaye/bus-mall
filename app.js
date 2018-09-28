@@ -61,8 +61,7 @@ function eventHandler(event){
   }
 
   if(maxClicksAllowed === 0) {
-    removeEventListeners();
-  
+    removeEventListeners();  
     summarizeData();
     return;
   }
@@ -71,36 +70,50 @@ function eventHandler(event){
   var randomNum1 = Math.floor(Math.random()*Images.allImages.length);
   var randomNum2 = Math.floor(Math.random()*Images.allImages.length);
   var randomNum3 = Math.floor(Math.random()*Images.allImages.length);
+  if(randomNum1!==randomNum2&&randomNum1!==randomNum3&&randomNum2!==randomNum3){
+    imgElement1.src = Images.allImages[randomNum1].imgSource;
+    imgElement1.alt = Images.allImages[randomNum1].filename;
 
-  imgElement1.src = Images.allImages[randomNum1].imgSource;
-  imgElement1.alt = Images.allImages[randomNum1].filename;
+    imgElement2.src = Images.allImages[randomNum2].imgSource;
+    imgElement2.alt = Images.allImages[randomNum2].filename;
 
-  imgElement2.src = Images.allImages[randomNum2].imgSource;
-  imgElement2.alt = Images.allImages[randomNum2].filename;
+    imgElement3.src = Images.allImages[randomNum3].imgSource;
+    imgElement3.alt = Images.allImages[randomNum3].filename;
 
-  imgElement3.src = Images.allImages[randomNum3].imgSource;
-  imgElement3.alt = Images.allImages[randomNum3].filename;
+    Images.allImages[randomNum1].numberOfTimesShown++;
+    Images.allImages[randomNum2].numberOfTimesShown++;
+    Images.allImages[randomNum3].numberOfTimesShown++;
+  }
 
-  Images.allImages[randomNum1].numberOfTimesShown++;
-  Images.allImages[randomNum2].numberOfTimesShown++;
-  Images.allImages[randomNum3].numberOfTimesShown++;
 
 }
 
-  document.body.onload = function(){
+document.body.onload = function(){
     
-    var randomNum4 = Math.floor(Math.random()*Images.allImages.length);
-    var randomNum5 = Math.floor(Math.random()*Images.allImages.length);
-    var randomNum6 = Math.floor(Math.random()*Images.allImages.length);
-      imgElement1.src = Images.allImages[randomNum4].imgSource;
-      imgElement1.alt = Images.allImages[randomNum4].filename;
+  var randomNum4 = Math.floor(Math.random()*Images.allImages.length);
+  var randomNum5 = Math.floor(Math.random()*Images.allImages.length);
+  var randomNum6 = Math.floor(Math.random()*Images.allImages.length);
+  if(randomNum4!==randomNum5&&randomNum4!==randomNum6&&randomNum5!==randomNum6){
+    imgElement1.src = Images.allImages[randomNum4].imgSource;
+    imgElement1.alt = Images.allImages[randomNum4].filename;
     
-      imgElement2.src = Images.allImages[randomNum5].imgSource;
-      imgElement2.alt = Images.allImages[randomNum5].filename;
+    imgElement2.src = Images.allImages[randomNum5].imgSource;
+    imgElement2.alt = Images.allImages[randomNum5].filename;
     
-      imgElement3.src = Images.allImages[randomNum6].imgSource;
-      imgElement3.alt = Images.allImages[randomNum6].filename;
-    };
+    imgElement3.src = Images.allImages[randomNum6].imgSource;
+    imgElement3.alt = Images.allImages[randomNum6].filename;
+  }
+  else{
+    imgElement1.src = Images.allImages[0].imgSource;
+    imgElement1.alt = Images.allImages[0].filename;
+    
+    imgElement2.src = Images.allImages[1].imgSource;
+    imgElement2.alt = Images.allImages[1].filename;
+    
+    imgElement3.src = Images.allImages[2].imgSource;
+    imgElement3.alt = Images.allImages[2].filename;
+  }
+};
 
 
 function summarizeData() {
